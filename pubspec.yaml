@@ -12,11 +12,15 @@ dependencies:
   forui: ^0.6.1
   forui_assets: ^0.3.0
   signals_flutter: ^5.5.1
+  domhel_vectors:
+    path: ../domhel_vectors
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  signals_lint: ^5.0.0
+  custom_lint: ^0.5.11
 
 flutter:
   uses-material-design: true

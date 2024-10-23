@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:math_ui/models/matrix_operation.dart';
+import 'package:math_ui/pages/input/+page.dart';
 import 'package:math_ui/pages/matrix_properties/+page.dart';
 import 'package:math_ui/simple_ui/simple_dropdown.dart';
 
@@ -40,12 +41,7 @@ class MainApp extends StatelessWidget {
                   FResizableRegion(
                     initialExtent: b,
                     minExtent: 100,
-                    builder: (_, data, __) => const FScaffold(
-                      header: FHeader(title: Text('2. Input')),
-                      content: Center(
-                        child: Text('settings go here'),
-                      ),
-                    ),
+                    builder: (_, data, __) => const InputPage(),
                   ),
                   FResizableRegion(
                     initialExtent: c,

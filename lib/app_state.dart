@@ -1,3 +1,4 @@
+import 'package:domhel_vectors/models/matrix.dart';
 import 'package:math_ui/models/matrix_operation.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 
@@ -24,11 +25,17 @@ class AppState {
             MatrixOperation.svd => false,
           });
   final editingMatrixDimension2 = signal((3, 3));
+  final showMatrix2 = signal(false);
 
-  final isPropertiesReady = signal(false);
+  final canEditInput = signal(false);
+
   final matrixOperation = signal(MatrixOperation.multiply);
-  final matrixDimension1 = signal((3, 3));
-  final matrixDimension2 = signal((3, 3));
+  final matrixDimension1 = signal((0, 0));
+  final matrix1 = signal(const Matrix([[]]));
+  final matrixDimension2 = signal((0, 0));
+  final matrix2 = signal(const Matrix([[]]));
+
+  final resultIsUpToDate = signal(false);
 
   late final canSaveProperties = computed(() {
     return editingMatrixOperation.value != matrixOperation.value ||
@@ -42,6 +49,21 @@ class AppState {
     return true;
   }
 
+  Matrix _matrixFromDimensions((int, int) dimensions,
+          [Matrix? valuesFromOldMatrix]) =>
+      Matrix(
+        List.generate(
+          dimensions.$1,
+          (i) => List.generate(
+              dimensions.$2,
+              (j) =>
+                  valuesFromOldMatrix?.value
+                      .elementAtOrNull(i)
+                      ?.elementAtOrNull(j) ??
+                  0),
+        ),
+      );
+
   bool validateAndSaveProperties() {
     if (!validate()) {
       return false;
@@ -49,11 +71,25 @@ class AppState {
     matrixOperation.value = editingMatrixOperation.value;
     matrixDimension1.value = editingMatrixDimension1.value;
     matrixDimension2.value = editingMatrixDimension2.value;
-    isPropertiesReady.value = true;
+    canEditInput.value = true;
+    showMatrix2.value = showEditingMatrix2.value;
+
+    matrix1.value = _matrixFromDimensions(
+      matrixDimension1.value,
+      matrix1.value,
+    );
+    matrix2.value = _matrixFromDimensions(
+      matrixDimension2.value,
+      showMatrix2.value ? matrix2.value : null,
+    );
+    assert(matrix1.value.dimension[0] == matrixDimension1.value.$1);
+    assert(matrix1.value.dimension[1] == matrixDimension1.value.$2);
+    assert(matrix2.value.dimension[0] == matrixDimension2.value.$1);
+    assert(matrix2.value.dimension[1] == matrixDimension2.value.$2);
     return true;
   }
 
   void resetProperties() {
-    isPropertiesReady.value = false;
+    canEditInput.value = false;
   }
 }
