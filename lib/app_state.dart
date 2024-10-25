@@ -8,7 +8,7 @@ class AppState {
   AppState._();
   static final instance = AppState._();
 
-  final editingMatrixOperation = signal(MatrixOperation.multiply);
+  final editingMatrixOperation = signal(MatrixOperation.add);
   final editingMatrixDimension1 = signal((3, 3));
 
   late final showEditingMatrix2 =
@@ -29,11 +29,13 @@ class AppState {
 
   final canEditInput = signal(false);
 
-  final matrixOperation = signal(MatrixOperation.multiply);
+  final matrixOperation = signal(MatrixOperation.add);
   final matrixDimension1 = signal((0, 0));
   final matrix1 = signal(const Matrix([[]]));
+  final editingMatrix1 = signal(const Matrix([[]]));
   final matrixDimension2 = signal((0, 0));
   final matrix2 = signal(const Matrix([[]]));
+  final editingMatrix2 = signal(const Matrix([[]]));
 
   final isResultUpToDate = signal(false);
   final resultMatrix = signal(const Matrix([[]]));
@@ -75,24 +77,26 @@ class AppState {
     canEditInput.value = true;
     showMatrix2.value = showEditingMatrix2.value;
 
-    matrix1.value = _matrixFromDimensions(
+    editingMatrix1.value = _matrixFromDimensions(
       matrixDimension1.value,
       matrix1.value,
     );
-    matrix2.value = _matrixFromDimensions(
+    editingMatrix2.value = _matrixFromDimensions(
       matrixDimension2.value,
       showMatrix2.value ? matrix2.value : null,
     );
-    assert(matrix1.value.dimension[0] == matrixDimension1.value.$1);
-    assert(matrix1.value.dimension[1] == matrixDimension1.value.$2);
-    assert(matrix2.value.dimension[0] == matrixDimension2.value.$1);
-    assert(matrix2.value.dimension[1] == matrixDimension2.value.$2);
+    assert(editingMatrix1.value.dimension[0] == matrixDimension1.value.$1);
+    assert(editingMatrix1.value.dimension[1] == matrixDimension1.value.$2);
+    assert(editingMatrix2.value.dimension[0] == matrixDimension2.value.$1);
+    assert(editingMatrix2.value.dimension[1] == matrixDimension2.value.$2);
 
     isResultUpToDate.value = false;
     return true;
   }
 
   void calculate() {
+    matrix1.value = editingMatrix1.value;
+    matrix2.value = editingMatrix2.value;
     try {
       switch (matrixOperation.value) {
         case MatrixOperation.scale:
@@ -124,6 +128,7 @@ class AppState {
       }
       isResultUpToDate.value = true;
     } catch (_) {}
+    print('result matrix now ${resultMatrix.value}');
   }
 
   void resetProperties() {

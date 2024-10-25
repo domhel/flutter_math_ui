@@ -54,11 +54,13 @@ class InputPage extends StatelessWidget {
                         style: context.theme.typography.lg,
                       ),
                       const SizedBox(height: 8),
-                      for (var i = 0; i < state.matrix1.value.value.length; ++i)
+                      for (var i = 0;
+                          i < state.editingMatrix1.value.value.length;
+                          ++i)
                         Row(
                           children: [
                             for (var j = 0;
-                                j < state.matrix1.value.value[i].length;
+                                j < state.editingMatrix1.value.value[i].length;
                                 ++j)
                               Expanded(
                                 child: FTextField(
@@ -67,8 +69,20 @@ class InputPage extends StatelessWidget {
                                     style: context.theme.textFieldStyle
                                         .enabledStyle.hintTextStyle,
                                   ),
-                                  initialValue: state.matrix1.value.value[i][j]
+                                  initialValue: state
+                                      .editingMatrix1.value.value[i][j]
                                       .toString(),
+                                  onChange: (newValue) {
+                                    final value = num.tryParse(
+                                        newValue.replaceAll(',', '.'));
+                                    if (value != null) {
+                                      state.editingMatrix1.value = state
+                                          .editingMatrix1.value
+                                          .copyWithChangedElement(
+                                              (i, j), value);
+                                      state.isResultUpToDate.value = false;
+                                    }
+                                  },
                                 ),
                               )
                           ],
@@ -81,12 +95,14 @@ class InputPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         for (var i = 0;
-                            i < state.matrix2.value.value.length;
+                            i < state.editingMatrix2.value.value.length;
                             ++i)
                           Row(
                             children: [
                               for (var j = 0;
-                                  j < state.matrix2.value.value[i].length;
+                                  j <
+                                      state
+                                          .editingMatrix2.value.value[i].length;
                                   ++j)
                                 Expanded(
                                   child: FTextField(
@@ -96,8 +112,19 @@ class InputPage extends StatelessWidget {
                                           .enabledStyle.hintTextStyle,
                                     ),
                                     initialValue: state
-                                        .matrix2.value.value[i][j]
+                                        .editingMatrix2.value.value[i][j]
                                         .toString(),
+                                    onChange: (newValue) {
+                                      final value = num.tryParse(
+                                          newValue.replaceAll(',', '.'));
+                                      if (value != null) {
+                                        state.editingMatrix2.value = state
+                                            .editingMatrix2.value
+                                            .copyWithChangedElement(
+                                                (i, j), value);
+                                        state.isResultUpToDate.value = false;
+                                      }
+                                    },
                                   ),
                                 )
                             ],

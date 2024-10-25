@@ -36,17 +36,37 @@ class ResultPage extends StatelessWidget {
                           j < state.resultMatrix.value.value[i].length;
                           ++j)
                         Expanded(
-                          child: FTextField(
-                            enabled: false,
-                            suffix: Text(
-                              '(${i + 1},${j + 1})',
-                              style: context.theme.textFieldStyle.enabledStyle
-                                  .hintTextStyle,
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              border: Border(
+                                left: j == 0
+                                    ? const BorderSide()
+                                    : BorderSide.none,
+                                top: i == 0
+                                    ? const BorderSide()
+                                    : BorderSide.none,
+                                bottom: const BorderSide(),
+                                right: const BorderSide(),
+                              ),
+                              color: (i + j) % 2 == 0
+                                  ? context.theme.colorScheme.border
+                                  : context.theme.colorScheme.background,
                             ),
-                            initialValue:
-                                state.resultMatrix.value.value[i][j].toString(),
+                            child:
+                                Text('${state.resultMatrix.value.value[i][j]}'),
                           ),
-                        )
+                          // child: FTextField(
+                          //   enabled: false,
+                          //   suffix: Text(
+                          //     '(${i + 1},${j + 1})',
+                          //     style: context.theme.textFieldStyle.enabledStyle
+                          //         .hintTextStyle,
+                          //   ),
+                          //   initialValue:
+                          //       state.resultMatrix.value.value[i][j].toString(),
+                          // ),
+                        ),
                     ],
                   ),
               ],
