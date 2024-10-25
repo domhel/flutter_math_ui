@@ -33,7 +33,7 @@ class ResultPage extends StatelessWidget {
                   Row(
                     children: [
                       for (var j = 0;
-                          j < state.matrix1.value.value[i].length;
+                          j < state.resultMatrix.value.value[i].length;
                           ++j)
                         Expanded(
                           child: FTextField(

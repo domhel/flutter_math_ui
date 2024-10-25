@@ -24,7 +24,7 @@ class InputPage extends StatelessWidget {
               if (MediaQuery.of(context).size.width < sizeLg)
                 FHeaderAction(
                   icon: FIcon(FAssets.icons.calculator),
-                  onPress: !state.isResultUpToDate.watch(context)
+                  onPress: !state.isResultUpToDate.value
                       ? () => state.calculate()
                       : null,
                 ),
@@ -34,10 +34,10 @@ class InputPage extends StatelessWidget {
               ? Padding(
                   padding: const EdgeInsets.all(16),
                   child: FButton(
-                    onPress: !state.isResultUpToDate.watch(context)
+                    onPress: !state.isResultUpToDate.value
                         ? () => state.calculate()
                         : null,
-                    label: !state.isResultUpToDate.watch(context)
+                    label: !state.isResultUpToDate.value
                         ? const Text('Calculate')
                         : const Text('Result is up to date'),
                     suffix: FIcon(FAssets.icons.chevronRight),
