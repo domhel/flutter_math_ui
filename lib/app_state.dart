@@ -87,6 +87,8 @@ class AppState {
     assert(matrix1.value.dimension[1] == matrixDimension1.value.$2);
     assert(matrix2.value.dimension[0] == matrixDimension2.value.$1);
     assert(matrix2.value.dimension[1] == matrixDimension2.value.$2);
+
+    isResultUpToDate.value = false;
     return true;
   }
 

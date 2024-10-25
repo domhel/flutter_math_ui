@@ -44,7 +44,7 @@ class ResultPage extends StatelessWidget {
                                   .hintTextStyle,
                             ),
                             initialValue:
-                                state.matrix1.value.value[i][j].toString(),
+                                state.resultMatrix.value.value[i][j].toString(),
                           ),
                         )
                     ],
