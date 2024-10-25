@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:math_ui/app_state.dart';
+import 'package:math_ui/globals.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 
 class InputPage extends StatelessWidget {
@@ -19,7 +20,30 @@ class InputPage extends StatelessWidget {
                   : context.theme.headerStyle.rootStyle.titleTextStyle
                       .copyWith(color: context.theme.colorScheme.muted),
             ),
+            actions: [
+              if (MediaQuery.of(context).size.width < sizeLg)
+                FHeaderAction(
+                  icon: FIcon(FAssets.icons.calculator),
+                  onPress: !state.isResultUpToDate.watch(context)
+                      ? () => state.calculate()
+                      : null,
+                ),
+            ],
           ),
+          footer: MediaQuery.of(context).size.width >= sizeLg
+              ? Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: FButton(
+                    onPress: !state.isResultUpToDate.watch(context)
+                        ? () => state.calculate()
+                        : null,
+                    label: !state.isResultUpToDate.watch(context)
+                        ? const Text('Calculate')
+                        : const Text('Result is up to date'),
+                    suffix: FIcon(FAssets.icons.chevronRight),
+                  ),
+                )
+              : null,
           content: state.canEditInput.value
               ? SingleChildScrollView(
                   child: Column(

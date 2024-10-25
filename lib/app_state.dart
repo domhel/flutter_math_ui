@@ -35,7 +35,8 @@ class AppState {
   final matrixDimension2 = signal((0, 0));
   final matrix2 = signal(const Matrix([[]]));
 
-  final resultIsUpToDate = signal(false);
+  final isResultUpToDate = signal(false);
+  final resultMatrix = signal(const Matrix([[]]));
 
   late final canSaveProperties = computed(() {
     return editingMatrixOperation.value != matrixOperation.value ||
@@ -87,6 +88,40 @@ class AppState {
     assert(matrix2.value.dimension[0] == matrixDimension2.value.$1);
     assert(matrix2.value.dimension[1] == matrixDimension2.value.$2);
     return true;
+  }
+
+  void calculate() {
+    try {
+      switch (matrixOperation.value) {
+        case MatrixOperation.scale:
+          throw UnimplementedError();
+        case MatrixOperation.add:
+          {
+            resultMatrix.value = matrix1.value + matrix2.value;
+            break;
+          }
+        case MatrixOperation.subtract:
+          throw UnimplementedError();
+        case MatrixOperation.multiply:
+          {
+            resultMatrix.value = matrix1.value * matrix2.value;
+            break;
+          }
+        case MatrixOperation.determinant:
+          throw UnimplementedError();
+        case MatrixOperation.transpose:
+          throw UnimplementedError();
+        case MatrixOperation.inverse:
+          throw UnimplementedError();
+        case MatrixOperation.trace:
+          throw UnimplementedError();
+        case MatrixOperation.evd:
+          throw UnimplementedError();
+        case MatrixOperation.svd:
+          throw UnimplementedError();
+      }
+      isResultUpToDate.value = true;
+    } catch (_) {}
   }
 
   void resetProperties() {

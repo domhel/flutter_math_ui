@@ -3,6 +3,7 @@ import 'package:forui/forui.dart';
 import 'package:math_ui/models/matrix_operation.dart';
 import 'package:math_ui/pages/input/+page.dart';
 import 'package:math_ui/pages/matrix_properties/+page.dart';
+import 'package:math_ui/pages/result/+page.dart';
 import 'package:math_ui/simple_ui/simple_dropdown.dart';
 
 void main() {
@@ -46,12 +47,7 @@ class MainApp extends StatelessWidget {
                   FResizableRegion(
                     initialExtent: c,
                     minExtent: 100,
-                    builder: (_, data, __) => const FScaffold(
-                      header: FHeader(title: Text('3. Result')),
-                      content: Center(
-                        child: Text('settings go here'),
-                      ),
-                    ),
+                    builder: (_, data, __) => const ResultPage(),
                   ),
                 ],
               );
